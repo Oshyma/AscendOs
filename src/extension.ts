@@ -1,30 +1,26 @@
 import * as vscode from 'vscode';
-
-
+import { showDashboard } from './ui/panelProvider';
+import { Persistence } from './storage/persistence';
+import { XPSystem } from './systems/xpSystem';
 export function activate(context: vscode.ExtensionContext){
     //Status Bar
     const xpStatusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
     context.subscriptions.push(xpStatusBar);
 
-    let xp = context.globalState.get<number>('xp') || 0;
-    let level = Math.floor(Math.sqrt(xp));
+    const persistence = new Persistence(context.globalState);
+    const xpSystem = new XPSystem(persistence);
 
     function updateStatusBar(){
-        xpStatusBar.text = `AscendOs: Lv ${level} (${xp} XP)`;
+        xpStatusBar.text = `AscendOs: Lv ${xpSystem.getLevel} (${xpSystem.getXP} XP)`;
         xpStatusBar.show();
     }
 
     updateStatusBar();
 
-
-    vscode.workspace.onDidSaveTextDocument(() => {
-        xp += 10;
-        level = Math.floor(Math.sqrt(xp));
-        context.globalState.update('xp', xp);
-        updateStatusBar();
-
-
+    let disposable = vscode.commands.registerCommand('ascendos.showDashboard', () => {
+    showDashboard(context);
     });
+    context.subscriptions.push(disposable);
 }
 
 export function deactivate() {}

@@ -4,7 +4,7 @@
   "description": "Gamify your coding with RPG progression, quests, and loots.",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.106.0"
+    "vscode": "^1.104.0"
   },
   "categories": [
     "Other"
@@ -14,9 +14,14 @@
   "contributes": {
     "commands": [
       {
-        "command": "ascendos.helloWorld",
-        "title": "Hello World"
-      }
+        "command": "ascendos.showDashboard",
+        "title": "AscendOs: Show Dashboard"
+      },
+      {
+        "command": "ascendos.activate",
+        "title": "AscendOs: Activate"
+      } 
+
     ]
   },
   "scripts": {
