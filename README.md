@@ -1,87 +1,91 @@
 # AscendOs
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE) [![VSCode Version](https://img.shields.io/badge/VS%20Code-%3E%3D1.80-blue)](https://code.visualstudio.com/) [![Status](https://img.shields.io/badge/status-beta-orange)](https://github.com/oshyma/AscendOs)
-
-**AscendOs** est une extension VS Code qui transforme votre expérience de codage en RPG. Gagnez de l’XP, accomplissez des missions et loot des objets en programmant !
-
----
-
-## 🎮 Fonctionnalités principales
-
-* Tracker automatiquement votre **XP** à chaque sauvegarde de fichier
-* Système de **niveau RPG** basé sur l’XP accumulé
-* **Missions** avec récompenses (XP + loot aléatoire)
-* **Loot** : armes, armures et potions, avec différents niveaux de rareté
-* **Dashboard graphique** pour suivre votre progression, inventaire et missions
-* Sobre, professionnel, mais immersif
+> **⚠️ Work In Progress — Project on hold**
+> AscendOs is an experimental project that has been put on hold indefinitely. The foundations are in place, but development has stalled. There is no ETA for the next update. Feel free to explore, fork, or contribute, but don't expect active maintenance for the time being.
 
 ---
 
-## 📸 Aperçu
+A Visual Studio Code extension that gamifies your coding experience. Write code, earn XP, level up, complete missions, and collect loot — all without leaving your editor.
+
+![TS](https://img.shields.io/badge/Typescript-3178c6?style=flat&logo=typescriptl&logoColor=white)
+ [![Status](https://img.shields.io/badge/status-wip-orange)](https://github.com/oshyma/AscendOs)
+![License](https://img.shields.io/badge/license-ISC-blue)
 
 
+## Features
 
----
+- **XP & Leveling System** — Earn experience points as you code. Levels scale with a progression curve (`100 × level^1.3` XP per level), so the grind stays satisfying.
+- **Status Bar Integration** — Your current level and XP are always visible in the VS Code status bar (`AscendOs: Lv X (Y XP)`).
+- **Mission System** — Complete coding milestones (save your first file, reach 5 saves, etc.) to earn bonus XP.
+- **Loot System** — Randomly drop items (weapons, armor, potions) with different rarities (Common, Rare, Epic) as you work.
+- **Persistent Progress** — All your data (XP, level, inventory) is saved using VS Code's global state storage and persists across sessions.
+- **Dashboard** — Open a dedicated panel to view your stats (command: `AscendOs: Show Dashboard`).
 
-## ⚡ Installation
+## Current State
 
-1. Clonez le dépôt :
+The following systems are scaffolded but not yet implemented:
+
+- Avatar system (`avatarSystem.ts` — empty)
+- Inventory system (`inventorySystem.ts` — empty)
+- Code & Git event listeners (`codeEvents.ts`, `gitEvents.ts`, `taskEvents.ts` — empty)
+
+The XP system, persistence layer, loot definitions, mission definitions, and UI panel provider are functional.
+
+## Requirements
+
+- Visual Studio Code `^1.104.0`
+- Node.js & pnpm
+
+## Installation (Development)
 
 ```bash
-git clone https://github.com/oshyma/AscendOs.git
+git clone https://github.com/your-username/AscendOs.git
 cd AscendOs
-```
-
-2. Installez les dépendances :
-
-```bash
 pnpm install
 ```
 
-3. Compilez le TypeScript :
+Then press `F5` in VS Code to launch the extension in a new Extension Development Host window.
+
+## Build
 
 ```bash
+# Development build
 pnpm run compile
+
+# Production build
+pnpm run package
 ```
 
-4. Lancez le mode debug dans VS Code :
+## Commands
 
-* Appuyez sur **F5** → une nouvelle fenêtre VS Code s’ouvre avec l’extension activée
+| Command | Description |
+|---|---|
+| `AscendOs: Show Dashboard` | Opens the AscendOs stats panel |
+| `AscendOs: Activate` | Activates the extension manually |
 
----
+## Tech Stack
 
-## 🚀 Utilisation
+- **TypeScript** with strict type checking
+- **ESBuild** for bundling
+- **VS Code Extension API** (`vscode.Memento` for persistence)
 
-* **XP automatique** : chaque sauvegarde de fichier rapporte de l’XP
-* **Command Palette** (`Ctrl+Shift+P` / `Cmd+Shift+P`) :
-
-  * `AscendOs: Show Dashboard` → ouvre le dashboard pour voir vos niveaux, missions et loot
-* Complétez des **missions** pour débloquer de nouveaux objets et XP supplémentaires
-
----
-
-## 🛠 Développement
-
-* **Structure du projet** :
+## Project Structure
 
 ```
 src/
-├─ extension.ts        # Extension principale
-├─ systems/
-│  ├─ missionSystem.ts      # Gestion des missions
-│  └─ lootSystem.ts          # Gestion du loot
-└─ ui/
-   └─ webview.ts       # Dashboard et UI webview
+├── extension.ts          # Entry point, status bar setup
+├── events/
+│   ├── codeEvents.ts     # (WIP) Code activity listeners
+│   ├── gitEvents.ts      # (WIP) Git event listeners
+│   └── taskEvents.ts     # (WIP) Task event listeners
+├── storage/
+│   └── persistence.ts    # Wrapper around vscode.Memento
+├── systems/
+│   ├── xpSystem.ts       # XP & leveling logic
+│   ├── lootSystem.ts     # Item definitions & random drops
+│   ├── missionSystem.ts  # Mission definitions
+│   ├── avatarSystem.ts   # (WIP)
+│   └── inventorySystem.ts# (WIP)
+└── ui/
+    └── panelProvider.ts  # Webview panel for the dashboard
 ```
-
-### Commandes disponibles
-
-* `ascendos.showDashboard` : Ouvre le dashboard
-
-### Build & Watch
-
-```bash
-npm run compile       # Compile le projet
-npm run watch         # Compile automatiquement à chaque changement
-```
-
